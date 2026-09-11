@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mitre-gap-analyzer"
+version = "0.1.0"
+description = "MITRE ATT&CK Coverage Gap Analyzer"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "[REDACTED]", email = "[REDACTED]@example.com"}
+]
+keywords = ["mitre", "att&ck", "coverage", "gap", "analyzer", "cybersecurity"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/[REDACTED]/mitre-attck-coverage-gap-analyzer"
+
+[project.scripts]
+mitre-gap-analyzer = "mitre_gap_analyzer.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

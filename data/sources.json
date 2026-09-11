@@ -1,0 +1,71 @@
+{
+  "mitre_attack": {
+    "enterprise": {
+      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack.json",
+      "description": "MITRE ATT&CK Enterprise ATT&CK STIX 2.1 data",
+      "license": "MITRE ATT&CK® License - Non-commercial use permitted",
+      "format": "stix2.1",
+      "last_updated": "2026-09-09"
+    },
+    "mobile": {
+      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/mobile-attack.json",
+      "description": "MITRE ATT&CK Mobile ATT&CK STIX 2.1 data",
+      "license": "MITRE ATT&CK® License - Non-commercial use permitted",
+      "format": "stix2.1",
+      "last_updated": "2026-09-09"
+    },
+    "ics": {
+      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/ics-attack.json",
+      "description": "MITRE ATT&CK ICS ATT&CK STIX 2.1 data",
+      "license": "MITRE ATT&CK® License - Non-commercial use permitted",
+      "format": "stix2.1",
+      "last_updated": "2026-09-09"
+    }
+  },
+  "coverage_formats": {
+    "sigma": {
+      "description": "Sigma rule format for detection coverage",
+      "mapping": {
+        "technique_id": "title",
+        "tactic": "tags"
+      },
+      "license": "MIT"
+    },
+    "elastic": {
+      "description": "Elastic SIEM detection rule format",
+      "mapping": {
+        "technique_id": "rule_id",
+        "tactic": "tags"
+      },
+      "license": "Elastic License"
+    },
+    "splunk": {
+      "description": "Splunk detection search format",
+      "mapping": {
+        "technique_id": "search_name",
+        "tactic": "tags"
+      },
+      "license": "Proprietary"
+    }
+  },
+  "data_schema": {
+    "technique": {
+      "technique_id": "str - MITRE technique ID (e.g., T1078)",
+      "technique_name": "str - Technique name",
+      "tactic": "str - Tactic shortname (e.g., 'initial_access')",
+      "sub_technique_id": "str - Optional sub-technique ID (e.g., T1078.001)",
+      "data_sources": "list - List of required data sources",
+      "prevalence": "int - Prevalence score (0-100)",
+      "exploitation": "bool - Whether technique is commonly exploited"
+    },
+    "coverage_map": {
+      "format": "csv/json/yaml",
+      "columns": {
+        "technique_id": "MITRE technique ID",
+        "tactic": "Tactic shortname",
+        "covered": "Boolean or date of last coverage update",
+        "detection_method": "Optional - Method used for detection"
+      }
+    }
+  }
+}

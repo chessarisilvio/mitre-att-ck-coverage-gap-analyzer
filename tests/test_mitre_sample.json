@@ -1,0 +1,157 @@
+{
+  "type": "bundle",
+  "id": "bundle--test-sample",
+  "spec_version": "2.1",
+  "objects": [
+    {
+      "type": "x-mitre-tactic",
+      "id": "x-mitre-tactic--1",
+      "created": "2017-05-31T21:33:27.062Z",
+      "modified": "2022-05-02T22:16:18.911Z",
+      "name": "Initial Access",
+      "shortname": "initial-access",
+      "description": "The adversary is trying to get into your network."
+    },
+    {
+      "type": "x-mitre-tactic",
+      "id": "x-mitre-tactic--2",
+      "created": "2017-05-31T21:33:27.062Z",
+      "modified": "2022-05-02T22:16:18.911Z",
+      "name": "Execution",
+      "shortname": "execution",
+      "description": "The adversary is trying to run malicious code."
+    },
+    {
+      "type": "attack-pattern",
+      "id": "attack-pattern--1",
+      "created": "2014-06-23T00:05:00.000Z",
+      "modified": "2022-05-02T22:16:18.911Z",
+      "name": "Valid Accounts",
+      "description": "Adversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Execution, Persistence, or Privilege Escalation.",
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_tactic": [
+        "initial-access",
+        "execution",
+        "persistence",
+        "privilege-escalation"
+      ],
+      "x_mitre_data_sources": [
+        "Authentication logs",
+        "Process command-line parameters",
+        "Process usage"
+      ],
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1078",
+          "external_id": "T1078"
+        }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "id": "attack-pattern--2",
+      "created": "2014-06-23T00:05:00.000Z",
+      "modified": "2022-05-02T22:16:18.911Z",
+      "name": "Default Accounts",
+      "description": "Adversaries may obtain and abuse credentials of default accounts, as shipped with a system or software, as a means of gaining Initial Access, Execution, Persistence, or Privilege Escalation.",
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_parent": "attack-pattern--1",
+      "x_mitre_tactic": [
+        "initial-access",
+        "execution",
+        "persistence",
+        "privilege-escalation"
+      ],
+      "x_mitre_data_sources": [
+        "Authentication logs",
+        "Process usage"
+      ],
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1078/001",
+          "external_id": "T1078.001"
+        }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "id": "attack-pattern--3",
+      "created": "2014-06-23T00:05:00.000Z",
+      "modified": "2022-05-02T22:16:18.911Z",
+      "name": "Domain Accounts",
+      "description": "Adversaries may obtain and abuse credentials of domain accounts as a means of gaining Initial Access, Execution, Persistence, or Privilege Escalation.",
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_parent": "attack-pattern--1",
+      "x_mitre_tactic": [
+        "initial-access",
+        "execution",
+        "persistence",
+        "privilege-escalation"
+      ],
+      "x_mitre_data_sources": [
+        "Authentication logs",
+        "Process command-line parameters"
+      ],
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1078/002",
+          "external_id": "T1078.002"
+        }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "id": "attack-pattern--4",
+      "created": "2014-06-23T00:05:00.000Z",
+      "modified": "2022-05-02T22:16:18.911Z",
+      "name": "Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder",
+      "description": "Adversaries may achieve persistence by adding a program to a startup folder or referencing it with a registry run key.",
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_parent": "attack-pattern--5",
+      "x_mitre_tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "x_mitre_data_sources": [
+        "Process command-line parameters",
+        "Process usage",
+        "Windows registry"
+      ],
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1547/001",
+          "external_id": "T1547.001"
+        }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "id": "attack-pattern--5",
+      "created": "2014-06-23T00:05:00.000Z",
+      "modified": "2022-05-02T22:16:18.911Z",
+      "name": "Boot or Logon Autostart Execution",
+      "description": "Adversaries may achieve persistence by adding programs to startup folders or referencing them with registry run keys.",
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_tactic": [
+        "persistence",
+        "privilege-escalation"
+      ],
+      "x_mitre_data_sources": [
+        "Process command-line parameters",
+        "Process usage",
+        "Windows registry"
+      ],
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1547",
+          "external_id": "T1547"
+        }
+      ]
+    }
+  ]
+}

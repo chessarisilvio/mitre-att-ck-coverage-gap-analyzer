@@ -1,0 +1,5 @@
+technique_id,tactic,technique_name,sub_technique_id,status,source
+T1078,initial-access,Valid Accounts,,covered,Sigma
+T1078.001,initial-access,Default Accounts,,covered,Sigma
+T1078.002,initial-access,Domain Accounts,,covered,Sigma
+T1547.001,persistence,Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder,,covered,Sigma

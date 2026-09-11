@@ -1,0 +1,31 @@
+# MITRE ATT&CK Coverage Gap Analyzer Configuration
+
+monitoring:
+  interval_seconds: 1.0
+  vram_warning_threshold: 85.0
+  vram_critical_threshold: 95.0
+  temperature_warning_threshold: 80.0
+  temperature_critical_threshold: 85.0
+  cpu_warning_threshold: 90.0
+  cpu_critical_threshold: 95.0
+
+optimization:
+  auto_tune_enabled: true
+  batch_size_adjustment: true
+  max_concurrent_processes: 4
+  safety_margin_gb: 2.0
+
+output:
+  include_system_stats: true
+  stats_sampling_duration: 5.0
+
+thresholds:
+  vram:
+    warning: 85.0
+    critical: 95.0
+  temperature:
+    warning: 80.0
+    critical: 85.0
+  cpu:
+    warning: 90.0
+    critical: 95.0
