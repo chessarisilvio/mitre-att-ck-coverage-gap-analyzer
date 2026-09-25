@@ -88,7 +88,7 @@ class CoverageLoader:
                 self._coverage[tactic].add(stix_id)
         logger.info(f"Loaded {len(self._coverage)} tactics from CSV")
 
-    def _load_json(self) -> None:
+    def _load_json(self, mitre_loader: MITRELoader) -> None:
         """Load coverage map from JSON format."""
         logger.debug("Loading JSON coverage map")
         with open(self.coverage_path, "r", encoding="utf-8") as f:
@@ -102,17 +102,27 @@ class CoverageLoader:
                 tactic = item.get("tactic", "").strip()
                 if not tactic:
                     continue
+                stix_id = mitre_loader.get_technique_stix_id(technique_id)
+                if stix_id is None:
+                    logger.warning(f"Technique ID {technique_id} not found in MITRE data, skipping")
+                    continue
                 if tactic not in self._coverage:
                     self._coverage[tactic] = set()
-                self._coverage[tactic].add(technique_id)
+                self._coverage[tactic].add(stix_id)
         elif isinstance(data, dict):
             # Dict mapping tactic -> list of technique IDs
             for tactic, technique_ids in data.items():
-                if isinstance(technique_ids, list):
-                    self._coverage[tactic] = set(technique_ids)
+                if not isinstance(technique_ids, list):
+                    continue
+                for technique_id in technique_ids:
+                    stix_id = mitre_loader.get_technique_stix_id(technique_id)
+                    if stix_id is None:
+                        logger.warning(f"Technique ID {technique_id} not found in MITRE data, skipping")
+                        continue
+                    self._coverage.setdefault(tactic, set()).add(stix_id)
         logger.info(f"Loaded {len(self._coverage)} tactics from JSON")
 
-    def _load_yaml(self) -> None:
+    def _load_yaml(self, mitre_loader: MITRELoader) -> None:
         """Load coverage map from YAML format."""
         logger.debug("Loading YAML coverage map")
         with open(self.coverage_path, "r", encoding="utf-8") as f:
@@ -125,13 +135,23 @@ class CoverageLoader:
                 tactic = item.get("tactic", "").strip()
                 if not tactic:
                     continue
+                stix_id = mitre_loader.get_technique_stix_id(technique_id)
+                if stix_id is None:
+                    logger.warning(f"Technique ID {technique_id} not found in MITRE data, skipping")
+                    continue
                 if tactic not in self._coverage:
                     self._coverage[tactic] = set()
-                self._coverage[tactic].add(technique_id)
+                self._coverage[tactic].add(stix_id)
         elif isinstance(data, dict):
             for tactic, technique_ids in data.items():
-                if isinstance(technique_ids, list):
-                    self._coverage[tactic] = set(technique_ids)
+                if not isinstance(technique_ids, list):
+                    continue
+                for technique_id in technique_ids:
+                    stix_id = mitre_loader.get_technique_stix_id(technique_id)
+                    if stix_id is None:
+                        logger.warning(f"Technique ID {technique_id} not found in MITRE data, skipping")
+                        continue
+                    self._coverage.setdefault(tactic, set()).add(stix_id)
         logger.info(f"Loaded {len(self._coverage)} tactics from YAML")
 
     def _build_internal_structure(self) -> Dict[str, Set[str]]:

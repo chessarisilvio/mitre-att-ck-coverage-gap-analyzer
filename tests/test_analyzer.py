@@ -71,6 +71,50 @@ def test_coverage_loader():
     print("✓ Coverage loader test passed")
 
 
+def test_coverage_loader_json():
+    """Test coverage loader with JSON data (list-of-objects form)."""
+    mitre_loader = MITRELoader(Path("tests/test_mitre_sample.json"))
+    mitre_loader.load()
+
+    loader = CoverageLoader(Path("tests/test_coverage.json"))
+    coverage = loader.load(mitre_loader)
+
+    assert "initial-access" in coverage
+    assert "persistence" in coverage
+
+    initial_access_covered = coverage["initial-access"]
+    assert "attack-pattern--1" in initial_access_covered  # T1078
+    assert "attack-pattern--2" in initial_access_covered  # T1078.001
+    assert "attack-pattern--3" in initial_access_covered  # T1078.002
+
+    persistence_covered = coverage["persistence"]
+    assert "attack-pattern--4" in persistence_covered  # T1547.001
+
+    print("✓ Coverage loader (JSON) test passed")
+
+
+def test_coverage_loader_yaml():
+    """Test coverage loader with YAML data (tactic -> technique_ids mapping)."""
+    mitre_loader = MITRELoader(Path("tests/test_mitre_sample.json"))
+    mitre_loader.load()
+
+    loader = CoverageLoader(Path("tests/test_coverage.yaml"))
+    coverage = loader.load(mitre_loader)
+
+    assert "initial-access" in coverage
+    assert "persistence" in coverage
+
+    initial_access_covered = coverage["initial-access"]
+    assert "attack-pattern--1" in initial_access_covered  # T1078
+    assert "attack-pattern--2" in initial_access_covered  # T1078.001
+    assert "attack-pattern--3" in initial_access_covered  # T1078.002
+
+    persistence_covered = coverage["persistence"]
+    assert "attack-pattern--4" in persistence_covered  # T1547.001
+
+    print("✓ Coverage loader (YAML) test passed")
+
+
 def test_gap_engine():
     """Test gap engine with sample data."""
     # Load MITRE data
@@ -153,6 +197,8 @@ def test_scoring_engine():
 if __name__ == "__main__":
     test_mitre_loader()
     test_coverage_loader()
+    test_coverage_loader_json()
+    test_coverage_loader_yaml()
     test_gap_engine()
     test_scoring_engine()
     print("\n✅ All tests passed!")
