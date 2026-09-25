@@ -1,25 +1,22 @@
 {
   "mitre_attack": {
     "enterprise": {
-      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack.json",
+      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack.json",
       "description": "MITRE ATT&CK Enterprise ATT&CK STIX 2.1 data",
       "license": "MITRE ATT&CK® License - Non-commercial use permitted",
-      "format": "stix2.1",
-      "last_updated": "2026-09-09"
+      "format": "stix2.1"
     },
     "mobile": {
-      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/mobile-attack.json",
+      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/mobile-attack/mobile-attack.json",
       "description": "MITRE ATT&CK Mobile ATT&CK STIX 2.1 data",
       "license": "MITRE ATT&CK® License - Non-commercial use permitted",
-      "format": "stix2.1",
-      "last_updated": "2026-09-09"
+      "format": "stix2.1"
     },
     "ics": {
-      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/ics-attack.json",
+      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/ics-attack/ics-attack.json",
       "description": "MITRE ATT&CK ICS ATT&CK STIX 2.1 data",
       "license": "MITRE ATT&CK® License - Non-commercial use permitted",
-      "format": "stix2.1",
-      "last_updated": "2026-09-09"
+      "format": "stix2.1"
     }
   },
   "coverage_formats": {
