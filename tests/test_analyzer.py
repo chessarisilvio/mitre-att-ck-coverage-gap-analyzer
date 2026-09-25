@@ -8,6 +8,7 @@ from mitre_gap_analyzer.mitre_loader import MITRELoader
 from mitre_gap_analyzer.coverage_loader import CoverageLoader
 from mitre_gap_analyzer.gap_engine import GapEngine
 from mitre_gap_analyzer.scoring_engine import ScoringEngine
+from mitre_gap_analyzer.report_generator import ReportGenerator
 
 
 def test_mitre_loader():
@@ -225,6 +226,48 @@ def test_scoring_engine():
     print("✓ Scoring engine test passed")
 
 
+def test_report_generator_markdown_interpolates_technique_name():
+    """Regression test: the Sigma stub's description line was a plain string
+    missing the f-prefix, so it rendered the literal text
+    "{tech['technique_name']}" instead of the actual technique name.
+    """
+    results = {
+        "overall_coverage": 50.0,
+        "total_techniques": 2,
+        "covered_techniques": 1,
+        "uncovered_techniques": 1,
+        "tactics": [
+            {
+                "tactic_shortname": "initial-access",
+                "tactic_name": "Initial Access",
+                "total_techniques": 2,
+                "covered_techniques": 1,
+                "uncovered_techniques": 1,
+                "coverage_percentage": 50.0,
+                "covered_technique_ids": ["attack-pattern--1"],
+                "uncovered_technique_ids": ["attack-pattern--2"],
+            }
+        ],
+        "scored_techniques": [
+            {
+                "tactic_shortname": "initial-access",
+                "tactic_name": "Initial Access",
+                "technique_id": "attack-pattern--2",
+                "technique_name": "Domain Accounts",
+                "score": 42.0,
+                "priority": "MEDIUM",
+            }
+        ],
+    }
+
+    markdown = ReportGenerator(results).generate_markdown()
+
+    assert "description: Detects potential Domain Accounts activity" in markdown
+    assert "{tech[" not in markdown
+
+    print("✓ Report generator markdown test passed")
+
+
 if __name__ == "__main__":
     test_mitre_loader()
     test_mitre_loader_real_stix_schema_fields()
@@ -233,4 +276,5 @@ if __name__ == "__main__":
     test_coverage_loader_yaml()
     test_gap_engine()
     test_scoring_engine()
+    test_report_generator_markdown_interpolates_technique_name()
     print("\n✅ All tests passed!")

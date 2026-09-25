@@ -133,7 +133,7 @@ class ReportGenerator:
             lines.append(f"title: Detect {tech['technique_name']} ({tech['technique_id']})")
             lines.append("id: REPLACE-WITH-UUID")
             lines.append("status: experimental")
-            lines.append("description: Detects potential {tech['technique_name']} activity")
+            lines.append(f"description: Detects potential {tech['technique_name']} activity")
             lines.append("author: Security Team")
             lines.append("date: 2026-09-09")
             lines.append("references:")
