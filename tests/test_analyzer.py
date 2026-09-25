@@ -40,9 +40,40 @@ def test_mitre_loader():
         t1078 = next(t for t in initial_access if t["technique_id"] == "attack-pattern--1")
         assert set(t1078["sub_technique_ids"]) == {"attack-pattern--2", "attack-pattern--3"}
 
+        # Revoked/deprecated techniques (T9999, T9998) must be excluded
+        assert "attack-pattern--6" not in technique_ids
+        assert "attack-pattern--7" not in technique_ids
+        assert loader.get_technique_stix_id("T9999") is None
+        assert loader.get_technique_stix_id("T9998") is None
+
         print("✓ MITRE loader test passed")
     finally:
         temp_path.unlink()
+
+
+def test_mitre_loader_real_stix_schema_fields():
+    """Regression test: the loader must use the actual field names present in
+    official MITRE ATT&CK STIX bundles (x_mitre_shortname, kill_chain_phases,
+    and "subtechnique-of" relationship objects), not invented ones. This
+    would previously silently produce zero techniques against real data.
+    """
+    loader = MITRELoader(Path("tests/test_mitre_sample.json"))
+    data = loader.load()
+
+    total_techniques = sum(len(techs) for techs in data.values())
+    assert total_techniques > 0
+
+    # Tactic assignment must come from kill_chain_phases, not a
+    # non-existent x_mitre_tactic field.
+    persistence = data["persistence"]
+    persistence_ids = {t["technique_id"] for t in persistence}
+    assert "attack-pattern--4" in persistence_ids  # T1547.001
+    assert "attack-pattern--5" in persistence_ids  # T1547
+
+    # Parent/sub-technique linkage must come from "subtechnique-of"
+    # relationship objects, not a non-existent x_mitre_parent field.
+    t1547 = next(t for t in persistence if t["technique_id"] == "attack-pattern--5")
+    assert "attack-pattern--4" in t1547["sub_technique_ids"]
 
 
 def test_coverage_loader():
@@ -196,6 +227,7 @@ def test_scoring_engine():
 
 if __name__ == "__main__":
     test_mitre_loader()
+    test_mitre_loader_real_stix_schema_fields()
     test_coverage_loader()
     test_coverage_loader_json()
     test_coverage_loader_yaml()
