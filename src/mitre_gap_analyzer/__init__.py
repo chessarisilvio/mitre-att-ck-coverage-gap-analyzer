@@ -1,7 +1,7 @@
 """MITRE ATT&CK Coverage Gap Analyzer."""
 
 __version__ = "0.1.0"
-__author__ = "[REDACTED]"
+__author__ = "Silvio Chessari"
 
 
 def main():

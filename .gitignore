@@ -19,5 +19,7 @@ build.log
 # Sandbox pip/build locale — non pubblicare
 .local/
 dist/
+build/
 bin/
 .pytest_cache/
+*.egg-info/

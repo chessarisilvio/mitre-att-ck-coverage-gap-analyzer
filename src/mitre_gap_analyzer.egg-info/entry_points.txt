@@ -1,2 +1,0 @@
-[console_scripts]
-mitre-gap-analyzer = mitre_gap_analyzer.cli:main

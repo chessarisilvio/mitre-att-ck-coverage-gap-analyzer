@@ -1,0 +1,6 @@
+[
+  {"technique_id": "T1078", "tactic": "initial-access", "status": "covered", "source": "Sigma"},
+  {"technique_id": "T1078.001", "tactic": "initial-access", "status": "covered", "source": "Sigma"},
+  {"technique_id": "T1078.002", "tactic": "initial-access", "status": "covered", "source": "Sigma"},
+  {"technique_id": "T1547.001", "tactic": "persistence", "status": "covered", "source": "Sigma"}
+]

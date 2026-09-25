@@ -9,7 +9,7 @@
       "created": "2017-05-31T21:33:27.062Z",
       "modified": "2022-05-02T22:16:18.911Z",
       "name": "Initial Access",
-      "shortname": "initial-access",
+      "x_mitre_shortname": "initial-access",
       "description": "The adversary is trying to get into your network."
     },
     {
@@ -18,7 +18,7 @@
       "created": "2017-05-31T21:33:27.062Z",
       "modified": "2022-05-02T22:16:18.911Z",
       "name": "Execution",
-      "shortname": "execution",
+      "x_mitre_shortname": "execution",
       "description": "The adversary is trying to run malicious code."
     },
     {
@@ -29,16 +29,11 @@
       "name": "Valid Accounts",
       "description": "Adversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Execution, Persistence, or Privilege Escalation.",
       "x_mitre_is_subtechnique": false,
-      "x_mitre_tactic": [
-        "initial-access",
-        "execution",
-        "persistence",
-        "privilege-escalation"
-      ],
-      "x_mitre_data_sources": [
-        "Authentication logs",
-        "Process command-line parameters",
-        "Process usage"
+      "kill_chain_phases": [
+        {"kill_chain_name": "mitre-attack", "phase_name": "initial-access"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "execution"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "persistence"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "privilege-escalation"}
       ],
       "external_references": [
         {
@@ -56,16 +51,11 @@
       "name": "Default Accounts",
       "description": "Adversaries may obtain and abuse credentials of default accounts, as shipped with a system or software, as a means of gaining Initial Access, Execution, Persistence, or Privilege Escalation.",
       "x_mitre_is_subtechnique": true,
-      "x_mitre_parent": "attack-pattern--1",
-      "x_mitre_tactic": [
-        "initial-access",
-        "execution",
-        "persistence",
-        "privilege-escalation"
-      ],
-      "x_mitre_data_sources": [
-        "Authentication logs",
-        "Process usage"
+      "kill_chain_phases": [
+        {"kill_chain_name": "mitre-attack", "phase_name": "initial-access"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "execution"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "persistence"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "privilege-escalation"}
       ],
       "external_references": [
         {
@@ -83,16 +73,11 @@
       "name": "Domain Accounts",
       "description": "Adversaries may obtain and abuse credentials of domain accounts as a means of gaining Initial Access, Execution, Persistence, or Privilege Escalation.",
       "x_mitre_is_subtechnique": true,
-      "x_mitre_parent": "attack-pattern--1",
-      "x_mitre_tactic": [
-        "initial-access",
-        "execution",
-        "persistence",
-        "privilege-escalation"
-      ],
-      "x_mitre_data_sources": [
-        "Authentication logs",
-        "Process command-line parameters"
+      "kill_chain_phases": [
+        {"kill_chain_name": "mitre-attack", "phase_name": "initial-access"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "execution"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "persistence"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "privilege-escalation"}
       ],
       "external_references": [
         {
@@ -110,15 +95,9 @@
       "name": "Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder",
       "description": "Adversaries may achieve persistence by adding a program to a startup folder or referencing it with a registry run key.",
       "x_mitre_is_subtechnique": true,
-      "x_mitre_parent": "attack-pattern--5",
-      "x_mitre_tactic": [
-        "persistence",
-        "privilege-escalation"
-      ],
-      "x_mitre_data_sources": [
-        "Process command-line parameters",
-        "Process usage",
-        "Windows registry"
+      "kill_chain_phases": [
+        {"kill_chain_name": "mitre-attack", "phase_name": "persistence"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "privilege-escalation"}
       ],
       "external_references": [
         {
@@ -136,14 +115,9 @@
       "name": "Boot or Logon Autostart Execution",
       "description": "Adversaries may achieve persistence by adding programs to startup folders or referencing them with registry run keys.",
       "x_mitre_is_subtechnique": false,
-      "x_mitre_tactic": [
-        "persistence",
-        "privilege-escalation"
-      ],
-      "x_mitre_data_sources": [
-        "Process command-line parameters",
-        "Process usage",
-        "Windows registry"
+      "kill_chain_phases": [
+        {"kill_chain_name": "mitre-attack", "phase_name": "persistence"},
+        {"kill_chain_name": "mitre-attack", "phase_name": "privilege-escalation"}
       ],
       "external_references": [
         {
@@ -152,6 +126,73 @@
           "external_id": "T1547"
         }
       ]
+    },
+    {
+      "type": "attack-pattern",
+      "id": "attack-pattern--6",
+      "created": "2014-06-23T00:05:00.000Z",
+      "modified": "2022-05-02T22:16:18.911Z",
+      "name": "Old Retired Technique",
+      "description": "A technique MITRE has since revoked; must be excluded from analysis.",
+      "x_mitre_is_subtechnique": false,
+      "revoked": true,
+      "kill_chain_phases": [
+        {"kill_chain_name": "mitre-attack", "phase_name": "initial-access"}
+      ],
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T9999",
+          "external_id": "T9999"
+        }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "id": "attack-pattern--7",
+      "created": "2014-06-23T00:05:00.000Z",
+      "modified": "2022-05-02T22:16:18.911Z",
+      "name": "Deprecated Technique",
+      "description": "A technique MITRE has since deprecated; must be excluded from analysis.",
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_deprecated": true,
+      "kill_chain_phases": [
+        {"kill_chain_name": "mitre-attack", "phase_name": "initial-access"}
+      ],
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T9998",
+          "external_id": "T9998"
+        }
+      ]
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--1",
+      "created": "2020-01-14T17:18:32.236Z",
+      "modified": "2020-01-14T17:18:32.236Z",
+      "relationship_type": "subtechnique-of",
+      "source_ref": "attack-pattern--2",
+      "target_ref": "attack-pattern--1"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--2",
+      "created": "2020-01-14T17:18:32.236Z",
+      "modified": "2020-01-14T17:18:32.236Z",
+      "relationship_type": "subtechnique-of",
+      "source_ref": "attack-pattern--3",
+      "target_ref": "attack-pattern--1"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--3",
+      "created": "2020-01-14T17:18:32.236Z",
+      "modified": "2020-01-14T17:18:32.236Z",
+      "relationship_type": "subtechnique-of",
+      "source_ref": "attack-pattern--4",
+      "target_ref": "attack-pattern--5"
     }
   ]
 }

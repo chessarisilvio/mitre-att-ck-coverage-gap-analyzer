@@ -49,13 +49,20 @@ class MITRELoader:
         with open(self.mitre_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
+        objects = data.get("objects", [])
+
         # Parse objects
-        for obj in data.get("objects", []):
+        for obj in objects:
             obj_type = obj.get("type")
             if obj_type == "x-mitre-tactic":
                 self._parse_tactic(obj)
             elif obj_type == "attack-pattern":
                 self._parse_technique(obj)
+
+        # Parent/sub-technique relationships are expressed as separate
+        # "subtechnique-of" relationship objects in the real ATT&CK STIX
+        # bundles (attack-pattern objects have no parent field of their own).
+        self._parse_subtechnique_relationships(objects)
 
         # Ensure all tactics referenced in techniques are present in self._tactics
         self._ensure_all_referenced_tactics()
@@ -68,9 +75,14 @@ class MITRELoader:
 
     def _parse_tactic(self, tactic: Dict[str, Any]) -> None:
         """Parse a tactic object."""
+        if tactic.get("revoked") or tactic.get("x_mitre_deprecated"):
+            return
+
         tactic_id = tactic.get("id")
         name = tactic.get("name", "")
-        shortname = tactic.get("shortname", "")
+        # ATT&CK STIX bundles store this as x_mitre_shortname; a bare
+        # "shortname" is kept as a fallback for hand-written fixtures.
+        shortname = tactic.get("x_mitre_shortname") or tactic.get("shortname", "")
         if not shortname:
             # Fallback to id if shortname missing
             shortname = tactic_id
@@ -84,17 +96,25 @@ class MITRELoader:
 
     def _parse_technique(self, technique: Dict[str, Any]) -> None:
         """Parse a technique or sub-technique object."""
+        if technique.get("revoked") or technique.get("x_mitre_deprecated"):
+            return
+
         tech_id = technique.get("id")
         name = technique.get("name", "")
         is_subtechnique = technique.get("x_mitre_is_subtechnique", False)
-        parent = technique.get("x_mitre_parent")
-        tactics = technique.get("x_mitre_tactic", [])
+        # Tactics are expressed via kill_chain_phases (kill_chain_name
+        # "mitre-attack"), not a dedicated x_mitre_tactic field.
+        tactics = [
+            phase.get("phase_name")
+            for phase in technique.get("kill_chain_phases", [])
+            if phase.get("kill_chain_name") == "mitre-attack" and phase.get("phase_name")
+        ]
 
         self._techniques[tech_id] = {
             "id": tech_id,
             "name": name,
             "is_subtechnique": is_subtechnique,
-            "parent": parent,
+            "parent": None,
             "tactics": tactics,
         }
         # Map from external_id (e.g., T1078) to STIX ID for easy lookup by coverage maps
@@ -107,6 +127,21 @@ class MITRELoader:
         logger.debug(
             f"Parsed {'sub-technique' if is_subtechnique else 'technique'}: {tech_id} ({name})"
         )
+
+    def _parse_subtechnique_relationships(self, objects: List[Dict[str, Any]]) -> None:
+        """Populate each sub-technique's parent from "subtechnique-of" relationship objects."""
+        for obj in objects:
+            if obj.get("type") != "relationship":
+                continue
+            if obj.get("relationship_type") != "subtechnique-of":
+                continue
+            if obj.get("revoked"):
+                continue
+
+            child_id = obj.get("source_ref")
+            parent_id = obj.get("target_ref")
+            if child_id in self._techniques:
+                self._techniques[child_id]["parent"] = parent_id
 
     def _ensure_all_referenced_tactics(self) -> None:
         """Ensure that all tactics referenced in techniques are present in self._tactics."""
