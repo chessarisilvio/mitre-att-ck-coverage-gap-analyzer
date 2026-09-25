@@ -21,3 +21,4 @@ build.log
 dist/
 bin/
 .pytest_cache/
+*.egg-info/

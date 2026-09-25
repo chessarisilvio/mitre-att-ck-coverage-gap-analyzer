@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "[REDACTED]", email = "[REDACTED]@example.com"}
+    {name = "Silvio Chessari", email = "chessarisilvio@gmail.com"}
 ]
 keywords = ["mitre", "att&ck", "coverage", "gap", "analyzer", "cybersecurity"]
 classifiers = [
@@ -18,9 +18,17 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
 
 [project.urls]
-Homepage = "https://github.com/[REDACTED]/mitre-attck-coverage-gap-analyzer"
+Homepage = "https://github.com/chessarisilvio/mitre-att-ck-coverage-gap-analyzer"
 
 [project.scripts]
 mitre-gap-analyzer = "mitre_gap_analyzer.cli:main"
